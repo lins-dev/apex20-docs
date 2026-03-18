@@ -4,13 +4,13 @@
 **Status:** Proposto
 
 ## Contexto
-O Apex20 exige consistência visual absoluta entre Web e Mobile. Para garantir a integridade do Design System em `packages/ui`, precisamos de um ambiente de desenvolvimento isolado e testes de regressão visual. Optamos pelo uso exclusivo do **Playwright** para manter a stack simplificada e evitar custos com serviços SaaS externos (como Chromatic) nesta fase.
+O Apex20 exige consistência visual absoluta entre Web e Mobile. Para garantir a integridade do Design System em `apex20-web/src/ui/`, precisamos de um ambiente de desenvolvimento isolado e testes de regressão visual. Optamos pelo uso exclusivo do **Playwright** para manter a stack simplificada e evitar custos com serviços SaaS externos (como Chromatic) nesta fase.
 
 ## Decisão
 Adotar o **Storybook** para documentação e o **Playwright** como ferramenta única de Testes de Regressão Visual, aplicando processos rigorosos para garantir determinismo e facilidade de revisão.
 
 ### 1. Storybook como Single Source of Truth
-- **Localização:** `packages/ui`.
+- **Localização:** `apex20-web/src/ui/`.
 - **Uso:** Todo componente deve ter histórias (.stories.tsx) que cubram seus estados visuais. O Storybook servirá como a especificação visual para devs e designers.
 
 ### 2. Estratégia de Testes Visuais (Playwright)

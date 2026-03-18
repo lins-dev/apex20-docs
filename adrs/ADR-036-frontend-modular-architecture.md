@@ -4,10 +4,10 @@
 **Status:** Aceito
 
 ## Contexto
-O Apex20 é um monorepo complexo que exige alta manutenibilidade e escalabilidade. Estruturas de pastas puramente técnicas (ex: colocar todos os componentes em uma única pasta `components/`) tornam-se caóticas à medida que o projeto cresce, dificultando o isolamento de lógica, testes e a navegação de novos desenvolvedores. Precisamos de uma estrutura que reflita as funcionalidades do domínio (VTT, Chat, Fichas) e minimize o acoplamento.
+O `apex20-web` é um repositório frontend independente que exige alta manutenibilidade e escalabilidade. Estruturas de pastas puramente técnicas (ex: colocar todos os componentes em uma única pasta `components/`) tornam-se caóticas à medida que o projeto cresce, dificultando o isolamento de lógica, testes e a navegação de novos desenvolvedores. Precisamos de uma estrutura que reflita as funcionalidades do domínio (VTT, Chat, Fichas) e minimize o acoplamento.
 
 ## Decisão
-Adotar uma **Arquitetura Baseada em Funcionalidades (Feature-based Architecture)** para todas as aplicações Frontend (`apps/web`, `apps/mobile`).
+Adotar uma **Arquitetura Baseada em Funcionalidades (Feature-based Architecture)** para as aplicações Frontend (`apex20-web` e, futuramente, o app mobile independente).
 
 ### 1. Estrutura de Diretórios (`src/`)
 A lógica principal será organizada no diretório `modules/`, onde cada subpasta representa uma funcionalidade autônoma do domínio.

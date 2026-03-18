@@ -4,7 +4,7 @@
 **Status:** Proposto
 
 ## Contexto
-O Apex20 é composto por múltiplos serviços (`apps/backend`, `apps/ws-service`) que precisam validar a identidade do usuário de forma consistente e performática. Em um ambiente de alta concorrência, como o serviço de WebSockets, consultar o banco de dados ou um serviço central de sessão para cada mensagem/conexão é inviável.
+O Apex20 é composto por múltiplos serviços (`apex20-backend`, `apex20-ws`) que precisam validar a identidade do usuário de forma consistente e performática. Em um ambiente de alta concorrência, como o serviço de WebSockets, consultar o banco de dados ou um serviço central de sessão para cada mensagem/conexão é inviável.
 
 ## Decisão
 Adotar **JWT (JSON Web Tokens)** utilizando o algoritmo de assinatura **RS256 (RSA Signature com SHA-256)**.

@@ -42,17 +42,17 @@ Este documento detalha as Sprints planejadas para o desenvolvimento do **Apex20*
 - [x] Validar Fluxo de CI/CD inicial e Docker Registry.
 
 ## 🛠️ Sprint 1: Infraestrutura e Contratos (Core)
-**Objetivo:** Estabelecer a base do monorepo e comunicação entre serviços.
+**Objetivo:** Estabelecer a base dos repositórios independentes (polyrepo) e comunicação entre serviços.
 **Detalhamento:** Ver [docs/tasks/sprint-1.md](tasks/sprint-1.md)
 
-- [x] Setup do Monorepo com Turborepo (Go, Next.js, Expo).
-- [x] Definição de Schemas Protobuf em `packages/contracts` (Handshake, Chat e GridEvents).
+- [x] Setup dos repositórios independentes (polyrepo): `apex20-web`, `apex20-backend`, `apex20-ws`.
+- [x] Definição de Schemas Protobuf em `apex20-contracts` (Handshake, Chat e GridEvents).
 - [x] Implementação do Middleware de Permissões de Grid (ACL: Quem move o quê).
 - [x] Configuração do Backend Go (Chi + Arquitetura Hexagonal + sqlc).
 - [x] Setup do Docker Compose local (PostgreSQL, Redis, Prometheus/Grafana).
 - [x] Implementação do serviço de WebSocket básico com Redis Pub/Sub.
 - [x] Boilerplate da aplicação Next.js com shadcn/ui.
-- [x] Setup inicial de `packages/i18n` (EN, PT-BR, ES, FR).
+- [x] Setup inicial do módulo i18n em `apex20-web/src/i18n/` (EN, PT-BR, ES, FR).
 
 ## ⚔️ Sprint 2: Mecânicas de Jogo e Sincronização (🟡 Em Progresso)
 **Objetivo:** Implementar o grid e o sistema de combate em tempo real.
@@ -86,7 +86,7 @@ Este documento detalha as Sprints planejadas para o desenvolvimento do **Apex20*
 **Objetivo:** Criar a versão desktop e preparar para o lançamento.
 
 - [ ] Empacotamento Desktop: Escolha final entre **Tauri** ou **Electron**.
-- [ ] Integração do App Desktop com o código-fonte de `apps/web`.
+- [ ] Integração do App Desktop com o código-fonte de `apex20-web`.
 - [ ] Refatoração e otimização de performance (Go Profiling e JS bundle size).
 - [ ] Documentação completa de API para desenvolvedores externos.
 - [ ] Lançamento da versão Alpha/Beta pública.

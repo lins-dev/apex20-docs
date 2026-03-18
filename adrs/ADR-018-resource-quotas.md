@@ -13,12 +13,12 @@ Implementar um sistema centralizado de **Gestão de Cotas e Limites** baseado em
     - **Free**: Limites básicos de armazenamento (ex: 100MB) e jogadores simultâneos por mesa (ex: 4).
     - **Pro/Master**: Limites expandidos ou ilimitados de armazenamento e acesso a recursos premium (IA, AR, alta fidelidade).
 2.  **Gestão de Armazenamento (Cloudflare R2)**:
-    - O `apps/backend` deve validar o espaço disponível do usuário antes de gerar URLs pré-assinadas para upload.
+    - O `apex20-backend` deve validar o espaço disponível do usuário antes de gerar URLs pré-assinadas para upload.
     - Implementar um serviço de contagem de bytes que atualiza o uso total do usuário no PostgreSQL após cada upload/deleção bem-sucedida.
 3.  **Créditos de IA e Rate Limiting**:
     - O uso de IA (Session Summaries) será controlado por um sistema de créditos mensais ou limites diários rígidos para evitar custos explosivos com APIs de terceiros.
 4.  **Limites de Conexão e Performance WebSocket**:
-    - O `apps/ws-service` deve consultar o plano do Mestre da mesa no momento do handshake (ADR-002) e aplicar os limites de conexão e **taxa de quadros (FPS)**.
+    - O `apex20-ws` deve consultar o plano do Mestre da mesa no momento do handshake (ADR-002) e aplicar os limites de conexão e **taxa de quadros (FPS)**.
     - **Cota de FPS:** Conforme **ADR-025**, o padrão de entrega é **30 FPS**, com o desbloqueio para **60 FPS** reservado a planos premium.
 5.  **Enforcement Híbrido**:
     - **Redis**: Utilizado para contadores rápidos e temporários (ex: rate limit de mensagens no chat, conexões ativas).

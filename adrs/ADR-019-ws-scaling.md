@@ -4,7 +4,7 @@
 **Status:** Aceito
 
 ## Contexto
-O Apex20 exige que o serviço de WebSockets (`apps/ws-service`) suporte milhares de conexões simultâneas com latência mínima (PRD: < 100ms). Como as conexões WebSocket são persistentes e mantêm estado em memória (quais usuários estão em quais salas), o escalonamento horizontal apresenta desafios:
+O Apex20 exige que o serviço de WebSockets (`apex20-ws`) suporte milhares de conexões simultâneas com latência mínima (PRD: < 100ms). Como as conexões WebSocket são persistentes e mantêm estado em memória (quais usuários estão em quais salas), o escalonamento horizontal apresenta desafios:
 1.  **Roteamento Inter-instância:** Jogadores da mesma sala podem estar conectados em servidores físicos diferentes.
 2.  **Service Discovery:** Como o cliente sabe para qual réplica apontar.
 3.  **Balanceamento de Carga:** Distribuir as conexões de forma justa sem quebrar o handshake do protocolo.

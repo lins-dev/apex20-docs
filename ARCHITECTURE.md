@@ -12,15 +12,15 @@ O fluxo de comunicação segue o padrão:
 `Client <-> API (HTTP/gRPC) <-> Redis Pub/Sub <-> WS Service <-> Client`
 
 1.  **Ação do Usuário:** O cliente realiza uma alteração local (Optimistic UI).
-2.  **API Core:** Uma requisição HTTP (ou gRPC) é enviada para o `apps/backend` (Go Chi).
+2.  **API Core:** Uma requisição HTTP (ou gRPC) é enviada para o `apex20-backend` (Go Chi).
 3.  **Persistência:** A API valida a regra de negócio e persiste os dados no PostgreSQL.
 4.  **Pub/Sub:** Após o sucesso, a API publica uma mensagem no **Redis Pub/Sub**.
-5.  **WS Service:** O `apps/ws-service` (Go WebSocket) está inscrito nos canais do Redis e recebe o evento.
+5.  **WS Service:** O `apex20-ws` (Go WebSocket) está inscrito nos canais do Redis e recebe o evento.
 6.  **Broadcast:** O serviço de WS encaminha a atualização para todos os clientes conectados na sala de jogo.
 
 ## 📦 Arquitetura Hexagonal (Backend)
 
-O `apps/backend` e o `apps/ws-service` seguem o padrão de **Arquitetura Hexagonal (Ports and Adapters)** para garantir testabilidade e independência de infraestrutura.
+O `apex20-backend` e o `apex20-ws` seguem o padrão de **Arquitetura Hexagonal (Ports and Adapters)** para garantir testabilidade e independência de infraestrutura.
 
 - **Domain:** Entidades puras e regras de negócio essenciais.
 - **Application (Services):** Orquestração de casos de uso e lógica de aplicação.

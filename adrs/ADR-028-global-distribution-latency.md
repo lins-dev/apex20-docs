@@ -14,7 +14,7 @@ Adotar uma arquitetura de **Distribuição Multi-regional** com roteamento intel
 - **Protocolo:** Priorizar conexões via WSS (Secure WebSockets) com suporte a TLS 1.3 para reduzir o overhead de handshake.
 
 ### 2. Clusters Regionais (PoPs)
-- Implementar clusters independentes do `apps/ws-service` em regiões estratégicas (ex: América do Sul - São Paulo, América do Norte - Virgínia, Europa - Frankfurt).
+- Implementar clusters independentes do `apex20-ws` em regiões estratégicas (ex: América do Sul - São Paulo, América do Norte - Virgínia, Europa - Frankfurt).
 - Cada cluster regional possui seu próprio **Redis local** para Pub/Sub de alta velocidade (ADR-019), garantindo que mensagens entre jogadores da mesma região não saiam do backbone local.
 
 ### 3. Afinidade de Campanha (Room Pinning)

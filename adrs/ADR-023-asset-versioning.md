@@ -27,7 +27,7 @@ O Apex20 armazena grandes volumes de assets (mapas em 4K, tokens, áudios) no **
 - **Invalidation:** Não é necessário realizar "Purge" manual na CDN, pois novas versões de um asset terão novas URLs.
 
 ### 4. Otimização de Assets (Pipeline)
-- O `apps/backend` será responsável por processar assets antes do upload final:
+- O `apex20-backend` será responsável por processar assets antes do upload final:
     - Conversão automática de imagens para **WebP/AVIF** para reduzir o tamanho.
     - Geração de **BlurHash** ou **Thumbnails** de baixa resolução para carregamento progressivo (LCP improvement).
 

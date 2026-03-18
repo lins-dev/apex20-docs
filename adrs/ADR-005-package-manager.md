@@ -1,28 +1,48 @@
-# ADR-005: Definição do Gerenciador de Pacotes (pnpm Workspaces) 📦
+# ADR-005: Estratégia de Repositórios e Gestão de Dependências (Polyrepo + Git Submodules) 📦
 
 **Data:** 2026-03-12
-**Status:** Aceito
+**Status:** Supersedido — revisado em 2026-03-17 (ver MIGRATION_PLAN.md)
 
 ## Contexto
-O Apex20 é estruturado como um monorepo que contém múltiplas aplicações (`apps/`) e pacotes compartilhados (`packages/`). Gerenciar dependências entre diferentes linguagens (Node.js/Next.js e Go) e garantir que os pacotes internos (como `contracts`, `ui` e `i18n`) sejam compartilhados de forma eficiente e segura é um desafio crítico de arquitetura.
+O Apex20 originalmente foi estruturado como um monorepo com pnpm Workspaces e Turborepo. Com o crescimento do projeto, a complexidade de build (Next.js canary + Turbopack, eslint compartilhado, tsconfig encadeados) passou a consumir mais tempo de manutenção do que o desenvolvimento do produto em si, especialmente para um único mantenedor.
 
 ## Decisão
-Adotar o **pnpm** como o gerenciador de pacotes oficial do monorepo, utilizando o recurso de **Workspaces**.
+Migrar de pnpm Workspaces/Turborepo para **repositórios Git independentes (polyrepo)**, compartilhando código via **Git Submodules**.
 
-1.  **Estrutura de Workspaces**: Definir a raiz do projeto com um arquivo `pnpm-workspace.yaml` que inclua as pastas `apps/*` e `packages/*`.
-2.  **Strict Mode**: Utilizar a arquitetura de `node_modules` não-plana (non-flat) do pnpm para garantir que os sub-projetos só acessem dependências declaradas explicitamente em seus próprios `package.json`.
-3.  **Local Packages**: Consumir pacotes internos (ex: `@apex20/ui`) utilizando o protocolo `workspace:*` para garantir que as alterações locais sejam refletidas instantaneamente sem necessidade de publicação.
-4.  **Orquestração com Turborepo**: O pnpm será o motor que alimenta o **Turborepo** para o cache de builds e execução de tarefas em paralelo.
+### Estrutura de Repositórios
+| Repositório | Stack | Gerenciador |
+|---|---|---|
+| `apex20-docs` | Markdown | — |
+| `apex20-contracts` | Protobuf / Buf CLI | — |
+| `apex20-web` | Next.js 16, TypeScript | npm |
+| `apex20-backend` | Go | Go modules |
+| `apex20-ws` | Go | Go modules |
+
+### Compartilhamento de Código
+- **`apex20-docs`** e **`apex20-contracts`** são consumidos como **git submodules** em `./docs/` e `./contracts/` de cada repositório.
+- O código TypeScript gerado dos contratos é consumido via path alias no `tsconfig.json`: `@contracts/* → ./contracts/gen/ts/*`.
+- O código Go gerado é consumido via `replace` no `go.mod`: `replace github.com/apex20/contracts => ./contracts/gen/go`.
+
+### Pacotes Internalizados
+- `packages/ui` → internalizado em `apex20-web/src/ui/` (design system).
+- `packages/i18n` → internalizado em `apex20-web/src/i18n/` (módulo i18n sem dependência externa).
 
 ## Justificativa
-- **Eficiência de Disco**: O uso de Hard Links pelo pnpm economiza gigabytes de espaço em disco ao compartilhar uma única *content-addressable store* para todas as dependências.
-- **Velocidade**: O pnpm é comprovadamente mais rápido que o npm e o yarn v1 em operações de instalação e resolução de dependências em monorepos.
-- **Segurança e Previsibilidade**: O isolamento estrito de dependências (non-hoisting) previne o uso acidental de pacotes fantasma (phantom dependencies), garantindo builds determinísticos em CI/CD.
+- **Simplicidade:** Cada repositório tem seu próprio ciclo de vida, tooling e CI/CD sem interferência cruzada.
+- **Velocidade:** Sem overhead de resolução de workspace; `npm install` e `go mod download` são operações diretas.
+- **Manutenibilidade:** Um único mantenedor consegue operar cada repositório de forma independente e focada.
 
 ## Consequências
-- **Positivas**: Builds mais rápidos; menor consumo de recursos; estrutura de monorepo extremamente robusta e organizada.
-- **Negativas**: Curva de aprendizado inicial para desenvolvedores acostumados apenas com o npm padrão; necessidade de configurar ferramentas de IDE (como VSCode) para entender a estrutura de links simbólicos em alguns cenários específicos.
+- **Positivas:** Setup drasticamente mais simples; cada repo é autocontido; sem conflitos de versão entre apps.
+- **Negativas:** Mudanças em contratos exigem atualização explícita do submodule em cada repositório consumidor; sem cache de build compartilhado entre repositórios.
 
-## Alternativas Consideradas
-- **npm**: Rejeitado pela lentidão e instabilidade ao gerenciar workspaces complexos.
-- **yarn (v1/v3)**: Rejeitado pela inconsistência no gerenciamento de links simbólicos e maior overhead de manutenção em comparação ao pnpm nativo.
+## Workflow de Atualização de Submodule
+```bash
+# Após alterar apex20-contracts:
+git submodule update --remote contracts
+git add contracts && git commit -m "🚀 chore(contracts): sync submodule"
+```
+
+## Referências
+- **MIGRATION_PLAN.md:** Detalhamento completo do processo de migração.
+- **ADR-007:** Estratégia de Contratos (Protobuf + Buf).

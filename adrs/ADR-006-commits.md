@@ -4,7 +4,7 @@
 **Status:** Aceito
 
 ## Contexto
-Em um monorepo com múltiplos serviços e desenvolvedores, o histórico de commits pode se tornar caótico rapidamente. Precisamos de um padrão que facilite a leitura do histórico, automatize a geração de changelogs e proporcione uma identidade visual clara para as mudanças.
+Em um projeto multi-repositório (polyrepo) com múltiplos serviços e desenvolvedores, o histórico de commits pode se tornar caótico rapidamente. Precisamos de um padrão que facilite a leitura do histórico, automatize a geração de changelogs e proporcione uma identidade visual clara para as mudanças.
 
 ## Decisão
 Adotar o padrão **Semantic Commits** (baseado no Conventional Commits) enriquecido com **Gitmoji**.
@@ -26,7 +26,7 @@ Adotar o padrão **Semantic Commits** (baseado no Conventional Commits) enriquec
 
 - **Semântica:** O uso de tipos (`feat`, `fix`, etc) permite que ferramentas automatizadas (como Semantic Release) gerenciem versões e changelogs de forma autônoma.
 - **Gitmoji:** O uso de emojis facilita a identificação visual rápida de cada tipo de mudança no histórico do Git ou em interfaces como o GitHub.
-- **Escopo:** O uso de escopos (`auth`, `api`, `web`) ajuda a identificar rapidamente qual parte do monorepo foi alterada.
+- **Escopo:** O uso de escopos (`auth`, `api`, `web`) ajuda a identificar rapidamente qual área do repositório foi alterada.
 
 ## Consequências
 - **Positivas:** Histórico de commits extremamente organizado, facilidade em gerar changelogs, melhor comunicação visual entre os membros da equipe.

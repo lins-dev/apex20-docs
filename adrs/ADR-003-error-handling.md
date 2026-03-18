@@ -20,7 +20,7 @@ Todas as APIs devem retornar o `Content-Type: application/problem+json` com a se
 
 ### Fluxo de i18n:
 - O **Backend** envia apenas o `type`.
-- O **Frontend** (Web/Mobile) possui um dicionário em `packages/i18n` que mapeia o `type` para a frase traduzida no idioma selecionado pelo usuário.
+- O **Frontend** (Web/Mobile) possui um dicionário em `apex20-web/src/i18n/` que mapeia o `type` para a frase traduzida no idioma selecionado pelo usuário.
 
 ## Justificativa
 - **Desacoplamento**: O backend não precisa conhecer o idioma do usuário para reportar erros.

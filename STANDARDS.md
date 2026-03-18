@@ -46,7 +46,7 @@ Seguimos o padrão **Semantic Commit** enriquecido com **Gitmoji**.
 Para garantir o padrão **Elite Standard**, o projeto utiliza as seguintes versões:
 - **Node.js:** v24 (Latest LTS).
 - **Go:** v1.26.
-- **pnpm:** v10.x.
+- **npm:** v10+ (gerenciador de pacotes do `apex20-web`).
 - **PostgreSQL:** v16.
 - **Redis:** v7.
 

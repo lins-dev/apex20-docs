@@ -21,8 +21,8 @@ Este documento estabelece as diretrizes fundamentais para qualquer agente de IA 
     *   Commits devem seguir o padrão **Semantic Commit + Gitmoji** (ADR-006).
 
 5.  **Contexto e Eficiência:**
-    *   Analise o contexto do monorepo antes de propor mudanças.
-    *   Mantenha a consistência entre os pacotes do Turborepo.
+    *   Analise o contexto de cada repositório do polyrepo antes de propor mudanças.
+    *   Mantenha a consistência entre os repositórios via submodules (`apex20-contracts`, `apex20-docs`).
 
 6.  **Foco na Demanda:**
     *   A IA deve realizar **estritamente o que for solicitado** pelo usuário.
@@ -33,7 +33,7 @@ Este documento estabelece as diretrizes fundamentais para qualquer agente de IA 
 *   **Backend:** Go 1.22+, Chi, sqlc, Protobuf.
 *   **Frontend:** Next.js (App Router), TailwindCSS, shadcn/ui.
 *   **Mobile:** Expo, NativeWind.
-*   **Gestão:** Turborepo, pnpm.
+*   **Gestão:** Git submodules, npm (frontend), Go modules (backend/ws).
 
 ## 🛡 Validação Obrigatória
 

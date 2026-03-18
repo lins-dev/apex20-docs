@@ -27,7 +27,7 @@ Implementar uma arquitetura de faturamento baseada na **Localização do Usuári
 
 ### 4. Arquitetura de Resiliência
 - **Assincronismo:** A falha na emissão de um documento fiscal nunca deve bloquear o acesso do jogador ao serviço (ADR-018).
-- **Fila de Retentativa (Retry Queue):** Implementar retentativas automáticas no `apps/backend` para lidar com a alta instabilidade dos webservices de prefeituras no Brasil.
+- **Fila de Retentativa (Retry Queue):** Implementar retentativas automáticas no `apex20-backend` para lidar com a alta instabilidade dos webservices de prefeituras no Brasil.
 
 ## Justificativa
 - **Conformidade "Elite":** Garante que o projeto esteja legalmente seguro desde o primeiro dia, evitando passivos tributários.

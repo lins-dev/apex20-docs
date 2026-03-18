@@ -9,7 +9,7 @@ O Apex20 exige comunicação eficiente e fortemente tipada entre múltiplos serv
 ## Decisão
 Adotar **Protobuf (Protocol Buffers)** como a linguagem de definição de interface (IDL) e o **ConnectRPC** como o framework de comunicação.
 
-1.  **Single Source of Truth**: Todos os contratos (.proto) residirão no pacote compartilhado `packages/contracts`.
+1.  **Single Source of Truth**: Todos os contratos (.proto) residirão no repositório `apex20-contracts`, consumido como git submodule em `./contracts/` por cada serviço.
 2.  **Protocolo (ConnectRPC)**: Utilizar o Connect da Buf (buf.build) para as comunicações entre o Frontend/Mobile e o Backend.
     - **Vantagem**: Funciona nativamente sobre HTTP/1.1 e HTTP/2, suporta chamadas unárias e streaming, e não exige proxies complexos (como o Envoy) para funcionar no navegador.
 3.  **Geração de Código**: 
@@ -25,7 +25,7 @@ Adotar **Protobuf (Protocol Buffers)** como a linguagem de definição de interf
 
 ## Consequências
 - **Positivas**: Redução drástica de erros de contrato; melhor performance de rede; facilidade de manutenção de múltiplos clientes (Web/Mobile).
-- **Negativas**: Requer um passo extra de geração de código durante o desenvolvimento (`pnpm run generate`); curva de aprendizado para desenvolvedores familiarizados apenas com JSON/REST tradicional.
+- **Negativas**: Requer um passo extra de geração de código ao alterar contratos (`buf generate` em `apex20-contracts`, seguido de `git submodule update --remote` nos consumidores); curva de aprendizado para desenvolvedores familiarizados apenas com JSON/REST tradicional.
 
 ## Alternativas Consideradas
 - **REST + OpenAPI (Swagger)**: Rejeitado pela dificuldade em manter os tipos TypeScript sincronizados com o Go de forma automática e performática.

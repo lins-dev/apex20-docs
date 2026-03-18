@@ -10,7 +10,7 @@ O Apex20 é um sistema distribuído e de alta performance. Problemas de latênci
 Adotar o ecossistema **OpenTelemetry (OTel)** para rastreamento e **Prometheus** para métricas.
 
 1.  **Distributed Tracing (OpenTelemetry)**: 
-    - Instrumentar o `apps/backend` e o `apps/ws-service` para gerar traces de cada requisição/mensagem.
+    - Instrumentar o `apex20-backend` e o `apex20-ws` para gerar traces de cada requisição/mensagem.
     - Propagar o `TraceID` do Frontend até a camada de persistência.
 2.  **Metrics (Prometheus)**: 
     - Exportar métricas técnicas (CPU, Memória, Latência HTTP/gRPC).

@@ -18,7 +18,7 @@ Adotar uma estratégia de **Write-Behind Caching** utilizando o **Redis** como "
 3.  **Persistência de Fechamento (On-Exit)**:
     - Quando o último jogador se desconecta de uma mesa, o sistema aguarda um breve "grace period" (ex: 30s) e realiza a persistência final obrigatória no PostgreSQL antes de limpar o cache do Redis.
 4.  **Log de Eventos Críticos (Event Sourcing Light)**:
-    - Ações que alteram regras de negócio permanentemente (ex: gastar recursos, causar dano, rolar dados) são enviadas imediatamente para o `apps/backend` para persistência síncrona, garantindo que o histórico de combate e chat nunca seja perdido.
+    - Ações que alteram regras de negócio permanentemente (ex: gastar recursos, causar dano, rolar dados) são enviadas imediatamente para o `apex20-backend` para persistência síncrona, garantindo que o histórico de combate e chat nunca seja perdido.
 
 ## Justificativa
 - **Performance de Grid**: Permite milhares de atualizações de posição por segundo sem estressar o banco de dados principal.
