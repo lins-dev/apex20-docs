@@ -25,8 +25,8 @@
   - `vitest.config.ts` com jsdom e path aliases
   - 50 testes passando: i18n, locale-detection, language-switcher, navbar, button
   - Cobertura: detecção de locale, dropdown de idioma, menu hamburguer, links traduzidos
-- [ ] **Testes Visuais:** Implementar testes de regressão visual nos componentes da landing page.
-  - Candidatos: Storybook + Chromatic, Playwright visual regression ou Percy
+- [x] **Testes Visuais:** Implementar testes de regressão visual nos componentes da landing page.
+  - Decisão (ADR-031): Storybook + Playwright visual regression (Docker para snapshots determinísticos)
 - [ ] **ConnectRPC Client:** Configurar o cliente de comunicação tipada para consumir os contratos do submodule `./contracts/gen/ts/` (via alias `@contracts/*`).
 
 ## 2. Autenticação e Cadastro (Novo 🔐)

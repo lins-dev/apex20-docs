@@ -39,6 +39,7 @@ Este documento detalha as Sprints planejadas para o desenvolvimento do **Apex20*
 - [x] Criar ADR-033: Automação de Faturamento e Emissão de Notas Fiscais (NF-e).
 - [x] Criar ADR-035: Esteira de Integridade e Qualidade (CI/CD).
 - [x] Criar ADR-036: Arquitetura Frontend Modular (Feature-based).
+- [x] Criar ADR-037: Estratégia de Branching (GitHub Flow Adaptado).
 - [x] Validar Fluxo de CI/CD inicial e Docker Registry.
 
 ## 🛠️ Sprint 1: Infraestrutura e Contratos (Core)
