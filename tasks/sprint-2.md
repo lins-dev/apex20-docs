@@ -27,7 +27,7 @@
   - Cobertura: detecção de locale, dropdown de idioma, menu hamburguer, links traduzidos
 - [x] **Testes Visuais:** Implementar testes de regressão visual nos componentes da landing page.
   - Decisão (ADR-031): Storybook + Playwright visual regression (Docker para snapshots determinísticos)
-- [ ] **ConnectRPC Client:** Configurar o cliente de comunicação tipada para consumir os contratos do submodule `./contracts/gen/ts/` (via alias `@contracts/*`).
+- [x] **ConnectRPC Client:** Configurar o cliente de comunicação tipada para consumir os contratos do submodule `./contracts/gen/ts/` (via alias `@contracts/*`).
 
 ## 2. Autenticação e Cadastro (Novo 🔐)
 - [ ] **Auth Schema:** Criar migração para a tabela `users` (UUIDv7, Argon2 hashing) com suporte a Roles (**GM, Player, Trusted**) e Permissions.
