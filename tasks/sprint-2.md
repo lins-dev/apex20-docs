@@ -34,11 +34,18 @@
   - Env vars via `.env.example` (NEXT_PUBLIC_API_URL)
 
 ## 2. Autenticação e Cadastro (Novo 🔐)
-- [ ] **Auth Schema:** Refatorar migrações para refletir modelagem correta de roles (ADR-002):
-  - `users`: remover coluna `role`; adicionar `is_admin BOOLEAN NOT NULL DEFAULT false`
-  - Nova tabela `campaign_members (id, campaign_id, user_id, role, created_at, updated_at)` com UNIQUE `(campaign_id, user_id)` — role: ENUM `gm/player/trusted`
-  - Ao criar uma campanha, inserir automaticamente o criador em `campaign_members` como `gm`
-  - Atualizar `role_permissions` para remover referências à role de plataforma (`user_role`) e usar apenas roles de campanha
+- [x] **Modelagem de Roles (DB + Contratos + Domain):** Refatorar toda a camada de dados para roles campaign-scoped (ADR-002):
+  - `001_create_users.sql`: remove `role`, adiciona `is_admin BOOLEAN NOT NULL DEFAULT false`
+  - `005_create_campaign_members.sql`: nova tabela `campaign_members (id, campaign_id, user_id, role, created_at, updated_at)` com UNIQUE `(campaign_id, user_id)`
+  - `apex20-contracts`: `ROLE_ADMIN` removido do proto; contratos Go e TS regenerados
+  - `domain/campaign/member.go`: nova entidade `Member` com roles GM, Player, Trusted
+  - `domain/permission/role.go`: constante `RoleAdmin` removida
+  - `sqlc.yaml` + `gen/`: override e modelos atualizados; novo `CampaignMember` gerado
+  - `seed_role_permissions`: bloco admin removido; `/admin/roles` retorna apenas GM, Player, Trusted
+- [ ] **Auth Schema (Fluxo de Aplicação):** Implementar a lógica de negócio que garante a integridade da modelagem:
+  - Ao criar campanha: inserir automaticamente o criador em `campaign_members` como `gm`
+  - Ao convidar usuário: inserir em `campaign_members` como `player` ou `trusted`
+  - Validação de role por `campaign_id` nas requisições HTTP e handshake WS
 - [ ] **Auth API:** Implementar endpoints de `SignUp` e `SignIn` no `apex20-backend` via ConnectRPC, incluindo hashing Argon2 e geração de JWT RS256.
 - [ ] **Auth UI (Modules):** Criar o módulo de autenticação no frontend (`modules/auth`) com formulários e lógica de proteção de rotas por `is_admin`.
 - [ ] **JWT/RS256:** Implementar geração e validação de tokens assimétricos com claims `sub` e `is_admin`. Role de campanha é resolvida dinamicamente via `campaign_members` por `campaign_id` (ADR-002).
