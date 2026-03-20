@@ -28,7 +28,7 @@ Para eventos de alta frequência (movimento de tokens), o servidor aplicará um 
 - Incidentes recorrentes serão logados para auditoria do mestre da campanha ou banimento automático do sistema.
 
 ### 4. Validação de Autoridade (Anti-Griefing)
-- **Permissões de Escrita:** O `ws-service` validará em tempo real se o `user_id` tem permissão para mover o `token_id` solicitado (conforme ADR-034/Tenant-isolation).
+- **Permissões de Escrita:** O `ws-service` validará em tempo real se o `user_id` tem permissão para mover o `token_id` solicitado. A role do usuário é resolvida via `campaign_members` (usando o `campaign_id` da sala) e cruzada com `role_permissions` — conforme ADR-002 e ADR-034.
 - **Sanitização:** Bloqueio de injeção de scripts em mensagens de chat (UTF-8 validation + HTML escaping no frontend).
 
 ## Justificativa

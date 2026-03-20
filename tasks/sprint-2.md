@@ -34,10 +34,14 @@
   - Env vars via `.env.example` (NEXT_PUBLIC_API_URL)
 
 ## 2. Autenticação e Cadastro (Novo 🔐)
-- [ ] **Auth Schema:** Criar migração para a tabela `users` (UUIDv7, Argon2 hashing) com suporte a Roles (**GM, Player, Trusted**) e Permissions.
-- [ ] **Auth API:** Implementar endpoints de `SignUp` e `SignIn` no `apex20-backend` via ConnectRPC, incluindo a atribuição inicial de Role.
-- [ ] **Auth UI (Modules):** Criar o módulo de autenticação no frontend (`modules/auth`) com formulários e lógica de proteção de rotas por Role.
-- [ ] **JWT/RS256:** Implementar a geração e validação de tokens assimétricos contendo a claim `role` para autorização cross-service (ADR-002).
+- [ ] **Auth Schema:** Refatorar migrações para refletir modelagem correta de roles (ADR-002):
+  - `users`: remover coluna `role`; adicionar `is_admin BOOLEAN NOT NULL DEFAULT false`
+  - Nova tabela `campaign_members (id, campaign_id, user_id, role, created_at, updated_at)` com UNIQUE `(campaign_id, user_id)` — role: ENUM `gm/player/trusted`
+  - Ao criar uma campanha, inserir automaticamente o criador em `campaign_members` como `gm`
+  - Atualizar `role_permissions` para remover referências à role de plataforma (`user_role`) e usar apenas roles de campanha
+- [ ] **Auth API:** Implementar endpoints de `SignUp` e `SignIn` no `apex20-backend` via ConnectRPC, incluindo hashing Argon2 e geração de JWT RS256.
+- [ ] **Auth UI (Modules):** Criar o módulo de autenticação no frontend (`modules/auth`) com formulários e lógica de proteção de rotas por `is_admin`.
+- [ ] **JWT/RS256:** Implementar geração e validação de tokens assimétricos com claims `sub` e `is_admin`. Role de campanha é resolvida dinamicamente via `campaign_members` por `campaign_id` (ADR-002).
 
 ## 3. Gestão de Estado e Sincronização
 - [ ] **State Orchestration:** Configurar **Zustand** para estado global e **XState** para máquinas de estado de jogo (ADR-025).

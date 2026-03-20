@@ -20,7 +20,7 @@ Adotar o princípio de **Privacy by Design** e estabelecer camadas rigorosas de 
     - Implementar funcionalidade de **Exclusão de Conta (Direito ao Esquecimento)**, garantindo a remoção de todos os dados pessoais, mantendo apenas o necessário para conformidade fiscal.
     - Implementar funcionalidade de **Exportação de Dados (Portabilidade)** em formato JSON legível por máquina para fichas e campanhas.
 4.  **Gestão de Sessão Segura**:
-    - Utilizar JWTs (conforme ADR-002) com tempo de expiração curto.
+    - Utilizar JWTs (conforme ADR-002) com tempo de expiração curto. O token carrega `sub` e `is_admin`; a role de campanha é resolvida dinamicamente via `campaign_members`, nunca persistida no token.
     - Implementar Blacklisting de tokens revogados no Redis para garantir encerramento imediato de sessões comprometidas.
 
 ## Estratégia de Segurança (Anti-Backdoor e Proteção)
