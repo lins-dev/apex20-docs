@@ -23,11 +23,15 @@
   - `LanguageSwitcher` dropdown customizado com bandeiras SVG (Brasil, EUA, Espanha, França)
 - [x] **Testes Unitários (TDD):** Configurar Vitest e implementar testes com abordagem red→green.
   - `vitest.config.ts` com jsdom e path aliases
-  - 50 testes passando: i18n, locale-detection, language-switcher, navbar, button
-  - Cobertura: detecção de locale, dropdown de idioma, menu hamburguer, links traduzidos
+  - 50+ testes passando: i18n, locale-detection, language-switcher, navbar, button, clients, transport
+  - Cobertura: detecção de locale, dropdown de idioma, menu hamburguer, links traduzidos, ConnectRPC client
 - [x] **Testes Visuais:** Implementar testes de regressão visual nos componentes da landing page.
   - Decisão (ADR-031): Storybook + Playwright visual regression (Docker para snapshots determinísticos)
+  - Stories implementadas: `cta-banner`, `features`, `footer`, `systems`, `button`, `tokens`
+  - Specs Playwright: `playwright/visual/landing.spec.ts` e `playwright/visual/ui.spec.ts`
 - [x] **ConnectRPC Client:** Configurar o cliente de comunicação tipada para consumir os contratos do submodule `./contracts/gen/ts/` (via alias `@contracts/*`).
+  - Implementado em `src/lib/api/clients.ts` e `src/lib/api/transport.ts`
+  - Env vars via `.env.example` (NEXT_PUBLIC_API_URL)
 
 ## 2. Autenticação e Cadastro (Novo 🔐)
 - [ ] **Auth Schema:** Criar migração para a tabela `users` (UUIDv7, Argon2 hashing) com suporte a Roles (**GM, Player, Trusted**) e Permissions.
@@ -36,22 +40,21 @@
 - [ ] **JWT/RS256:** Implementar a geração e validação de tokens assimétricos contendo a claim `role` para autorização cross-service (ADR-002).
 
 ## 3. Gestão de Estado e Sincronização
-...
 - [ ] **State Orchestration:** Configurar **Zustand** para estado global e **XState** para máquinas de estado de jogo (ADR-025).
 - [ ] **WebSocket Client:** Implementar o hook de conexão resiliente com o `ws-service` (exponential backoff).
 - [ ] **Auth Integration:** Implementar o fluxo de persistência e envio do JWT (RS256) nos headers das requisições e no Handshake do WS (ADR-002).
 
-## 3. Sistema de Grid (MVP)
+## 4. Sistema de Grid (MVP)
 - [ ] **Grid Canvas/SVG:** Implementar a renderização do grid baseada em coordenadas.
 - [ ] **Optimistic Movement:** Implementar o arraste de tokens com atualização instantânea local e reconciliação via servidor (ADR-011).
 - [ ] **Soft Locking:** Implementar sinais visuais quando um token está sendo manipulado por outro jogador.
 
-## 4. Mecânicas Core (Backend Support)
+## 5. Mecânicas Core (Backend Support)
 - [ ] **Server-side Roller:** Implementar gerador de dados no `backend` usando `crypto/rand` (ADR-016).
 - [ ] **Room Isolation:** Finalizar o isolamento de salas por `campaign_id` no `ws-service` via Redis (ADR-019).
 - [ ] **Asset Proxy:** Implementar a entrega de imagens via Cloudflare CDN com suporte a Content Hashing (ADR-023).
 
-## 5. Persistência e Infra
+## 6. Persistência e Infra
 - [ ] **Migrations Sprint 2:** Criar tabelas de `campaigns` e `scenes` com suporte a snapshots JSONB (ADR-017).
 - [ ] **sqlc CRUD:** Implementar os repositórios básicos para carregar o estado inicial da mesa.
 

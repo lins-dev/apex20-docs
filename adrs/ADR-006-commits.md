@@ -32,6 +32,10 @@ Adotar o padrão **Semantic Commits** (baseado no Conventional Commits) enriquec
 - **Positivas:** Histórico de commits extremamente organizado, facilidade em gerar changelogs, melhor comunicação visual entre os membros da equipe.
 - **Negativas:** Exige um pequeno esforço adicional na hora de escrever os commits. Requer que os desenvolvedores tenham acesso a uma lista de emojis ou ferramentas auxiliares (como `gitmoji-cli`).
 
+## Regras Adicionais
+
+- **Sem Co-autoria de IA:** É proibido incluir linhas `Co-Authored-By` referenciando ferramentas de IA (ex: Claude, Copilot) em qualquer commit. Todos os commits são de autoria exclusiva do desenvolvedor responsável.
+
 ## Exemplos
 - ✨ `feat(ws): implement redis pub/sub integration`
 - 🐛 `fix(web): correct dice animation glitch`
