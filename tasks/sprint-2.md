@@ -76,7 +76,14 @@
 - [ ] **Room Isolation:** Finalizar o isolamento de salas por `campaign_id` no `ws-service` via Redis (ADR-019).
 - [ ] **Asset Proxy:** Implementar a entrega de imagens via Cloudflare CDN com suporte a Content Hashing (ADR-023).
 
-## 6. Persistência e Infra
+## 6. Padronização de Pacotes Frontend (ADR-019)
+- [ ] **Adotar pacotes padrão ausentes no `apex20-web`:** Incorporar as bibliotecas definidas como padrão em todos os projetos frontend:
+  - `zod` — validação de esquemas (forms e I/O de API)
+  - `react-hook-form` + `@hookform/resolvers` — gerenciamento de formulários (necessário para Auth UI)
+  - `@tanstack/react-query` — estado de servidor e cache de dados
+  - `@nivo/core` + `@nivo/bar` + `@nivo/line` — visualização de dados (stats de sessão, histórico de rolagens, player analytics)
+
+## 7. Persistência e Infra
 - [ ] **Migrations Sprint 2:** Criar tabelas de `campaigns` e `scenes` com suporte a snapshots JSONB (ADR-017).
 - [ ] **sqlc CRUD:** Implementar os repositórios básicos para carregar o estado inicial da mesa.
 
