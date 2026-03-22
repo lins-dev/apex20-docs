@@ -42,10 +42,21 @@
   - `domain/permission/role.go`: constante `RoleAdmin` removida
   - `sqlc.yaml` + `gen/`: override e modelos atualizados; novo `CampaignMember` gerado
   - `seed_role_permissions`: bloco admin removido; `/admin/roles` retorna apenas GM, Player, Trusted
-- [ ] **Auth Schema (Fluxo de Aplicação):** Implementar a lógica de negócio que garante a integridade da modelagem:
+- [x] **Auth Schema (Fluxo de Aplicação):** Implementar a lógica de negócio que garante a integridade da modelagem:
   - Ao criar campanha: inserir automaticamente o criador em `campaign_members` como `gm`
   - Ao convidar usuário: inserir em `campaign_members` como `player` ou `trusted`
   - Validação de role por `campaign_id` nas requisições HTTP e handshake WS
+  - Use cases: `CreateCampaign`, `InviteMember`, `GetMemberRole`
+  - Repositórios: `PostgresCampaignRepository` (transação atômica), `PostgresCampaignMemberRepository`
+  - Handler HTTP: `POST /campaigns`
+- [ ] **Campaign CRUD:** Implementar os endpoints REST completos de campanhas no `apex20-backend`:
+  - `GET /campaigns` — listar campanhas do usuário autenticado
+  - `GET /campaigns/{id}` — obter campanha por ID
+  - `PUT /campaigns/{id}` — atualizar nome e descrição
+  - `DELETE /campaigns/{id}` — soft delete
+- [ ] **Campaign Members API:** Gerenciar membros de uma campanha:
+  - `POST /campaigns/{id}/members` — convidar jogador (`player` ou `trusted`)
+  - `DELETE /campaigns/{id}/members/{userId}` — remover jogador da campanha
 - [ ] **Auth API:** Implementar endpoints de `SignUp` e `SignIn` no `apex20-backend` via ConnectRPC, incluindo hashing Argon2 e geração de JWT RS256.
 - [ ] **Auth UI (Modules):** Criar o módulo de autenticação no frontend (`modules/auth`) com formulários e lógica de proteção de rotas por `is_admin`.
 - [ ] **JWT/RS256:** Implementar geração e validação de tokens assimétricos com claims `sub` e `is_admin`. Role de campanha é resolvida dinamicamente via `campaign_members` por `campaign_id` (ADR-002).
