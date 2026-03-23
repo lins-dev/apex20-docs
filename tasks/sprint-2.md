@@ -49,12 +49,12 @@
   - Use cases: `CreateCampaign`, `InviteMember`, `GetMemberRole`
   - Repositórios: `PostgresCampaignRepository` (transação atômica), `PostgresCampaignMemberRepository`
   - Handler HTTP: `POST /campaigns`
-- [ ] **Campaign CRUD:** Implementar os endpoints REST completos de campanhas no `apex20-backend`:
+- [x] **Campaign CRUD:** Implementar os endpoints REST completos de campanhas no `apex20-backend`:
   - `GET /campaigns` — listar campanhas do usuário autenticado
   - `GET /campaigns/{id}` — obter campanha por ID
-  - `PUT /campaigns/{id}` — atualizar nome e descrição
+  - `PUT /campaigns/{id}` — atualizar nome e descrição (`description` nullable)
   - `DELETE /campaigns/{id}` — soft delete
-- [ ] **Campaign Members API:** Gerenciar membros de uma campanha:
+- [x] **Campaign Members API:** Gerenciar membros de uma campanha:
   - `POST /campaigns/{id}/members` — convidar jogador (`player` ou `trusted`)
   - `DELETE /campaigns/{id}/members/{userId}` — remover jogador da campanha
 - [ ] **Auth API:** Implementar endpoints de `SignUp` e `SignIn` no `apex20-backend` via ConnectRPC, incluindo hashing Argon2 e geração de JWT RS256.
