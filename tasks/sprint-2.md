@@ -57,7 +57,7 @@
 - [x] **Campaign Members API:** Gerenciar membros de uma campanha:
   - `POST /campaigns/{id}/members` — convidar jogador (`player` ou `trusted`)
   - `DELETE /campaigns/{id}/members/{userId}` — remover jogador da campanha
-- [ ] **Auth API:** Implementar endpoints de `SignUp` e `SignIn` no `apex20-backend` via ConnectRPC, incluindo hashing Argon2 e geração de JWT RS256.
+- [x] **Auth API:** Implementar endpoints de `SignUp` e `SignIn` no `apex20-backend` via ConnectRPC, incluindo hashing Argon2 e geração de JWT RS256.
 - [ ] **Auth UI (Modules):** Criar o módulo de autenticação no frontend (`modules/auth`) com formulários e lógica de proteção de rotas por `is_admin`.
 - [ ] **JWT/RS256:** Implementar geração e validação de tokens assimétricos com claims `sub` e `is_admin`. Role de campanha é resolvida dinamicamente via `campaign_members` por `campaign_id` (ADR-002).
 
