@@ -60,6 +60,13 @@
 - [x] **Auth API:** Implementar endpoints de `SignUp` e `SignIn` no `apex20-backend` via ConnectRPC, incluindo hashing Argon2 e geração de JWT RS256.
 - [x] **Auth UI (Modules):** Criar o módulo de autenticação no frontend (`modules/auth`) com formulários e lógica de proteção de rotas por `is_admin`.
 - [x] **JWT/RS256:** Implementar geração e validação de tokens assimétricos com claims `sub` e `is_admin`. Role de campanha é resolvida dinamicamente via `campaign_members` por `campaign_id` (ADR-002).
+- [ ] **Navbar: redistribuição de espaço para evitar quebra de linha em locales longos (FR):** Em francês, os botões "Se connecter" e "Commencer gratuitement" quebram para duas linhas porque o espaço fixo dos nav links não se adapta ao tamanho do conteúdo. A navbar ainda tem espaço disponível — redistribuir usando `min-w-0` + `shrink` nos nav links e `shrink-0` nos botões de ação para garantir que os CTAs sempre fiquem em linha única.
+- [x] **Auth UI Redesign (Padronização de Layout):** Ajustar as páginas de login e cadastro para seguirem o padrão visual do produto (Navbar + Footer compartilhados) com layout inspirado no Roll20:
+  - `AuthLayout` (`modules/auth/components/auth-layout.tsx`): split panel — painel esquerdo de branding + painel direito com formulário
+  - Navbar: botões "Login" e "Sign Up" convertidos para `<Link>` com destinos `/login` e `/signup`
+  - `SignUpForm`: adicionar campo "Confirmar senha" com validação de igualdade via Zod
+  - i18n: atualizar as 4 locales (`en`, `pt-br`, `es`, `fr`) com as chaves de confirmPassword
+  - Testes: atualizar cobertura de `sign-up-form.test.tsx` e `navbar.test.tsx`
 
 ## 3. Gestão de Estado e Sincronização
 - [ ] **State Orchestration:** Configurar **Zustand** para estado global e **XState** para máquinas de estado de jogo (ADR-025).
