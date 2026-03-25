@@ -58,11 +58,15 @@ Este documento detalha as Sprints planejadas para o desenvolvimento do **Apex20*
 ## ⚔️ Sprint 2: Mecânicas de Jogo e Sincronização (🟡 Em Progresso)
 **Objetivo:** Implementar o grid e o sistema de combate em tempo real.
 
+- [x] Auth API (SignUp/SignIn via ConnectRPC, Argon2, JWT RS256).
+- [x] Auth UI (`modules/auth`: SignInForm, SignUpForm, useAuth, route guards).
+- [x] CRUD de Campanhas (criação, listagem, edição, exclusão soft-delete).
+- [x] Campaign Members API (convidar/remover jogadores).
+- [ ] CRUD de Personagens (Fichas dinâmicas).
 - [ ] Sistema de Grid com movimentação de tokens (Optimistic UI).
 - [ ] Rolagem de dados e Chat sincronizado via WebSocket.
 - [ ] Implementação do Storage via **Cloudflare R2** (Maps, Tokens e Assets).
 - [ ] Pipeline de Otimização Automática de Assets (WebP/AVIF).
-- [ ] CRUD de Campanhas e Personagens (Fichas dinâmicas).
 - [ ] Sistema de internacionalização (i18n) funcional em todos os apps.
 
 ## 📱 Sprint 3: Mobile e Experiência do Jogador
