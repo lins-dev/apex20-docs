@@ -55,7 +55,26 @@ Este documento detalha as Sprints planejadas para o desenvolvimento do **Apex20*
 - [x] Boilerplate da aplicação Next.js com shadcn/ui.
 - [x] Setup inicial do módulo i18n em `apex20-web/src/i18n/` (EN, PT-BR, ES, FR).
 
-## ⚔️ Sprint 2: Mecânicas de Jogo e Sincronização (🟡 Em Progresso)
+## 🔄 Sprint M: Migração Next.js → React + TanStack (🔴 Pendente — 🔥 PRIORIDADE MÁXIMA)
+**Objetivo:** Remover completamente o Next.js do `apex20-web` e migrar para React 19 + TanStack (Router + Start + Query), mantendo 100% da funcionalidade e todos os testes passando.
+**Branch:** `refactor/nextjs-to-tanstack` → PR para `dev`
+**ADR:** [ADR-038](adrs/ADR-038-nextjs-to-tanstack-migration.md)
+**Detalhamento:** Ver [docs/tasks/sprint-migration.md](tasks/sprint-migration.md)
+**Bloqueio:** Todas as demais sprints estão suspensas até conclusão desta.
+
+- [ ] Fase 1: Remover Next.js, instalar TanStack Start + Router + Query, configurar `app.config.ts`.
+- [ ] Fase 2: Criar estrutura `src/routes/` com TanStack Router (substitui `src/app/`).
+- [ ] Fase 3: Reimplementar middleware (i18n + auth guard) como `beforeLoad` hooks.
+- [ ] Fase 4: Substituir todos os imports `next/*` (`next/link`, `next/navigation`, `next/font`).
+- [ ] Fase 5: Substituir `generateMetadata()` pela API de `head` do TanStack Router.
+- [ ] Fase 6: Atualizar testes (remover mocks de Next.js, adaptar para TanStack Router).
+- [ ] Fase 7: Validar testes visuais (Playwright/Storybook).
+- [ ] Fase 8: Build de produção sem erros, validação funcional completa.
+- [ ] Fase 9: Limpeza final, PR `refactor/nextjs-to-tanstack` → `dev` com CI verde.
+
+---
+
+## ⚔️ Sprint 2: Mecânicas de Jogo e Sincronização (⚙️ Suspensa — aguardando Sprint M)
 **Objetivo:** Implementar o grid e o sistema de combate em tempo real.
 
 - [x] Auth API (SignUp/SignIn via ConnectRPC, Argon2, JWT RS256).

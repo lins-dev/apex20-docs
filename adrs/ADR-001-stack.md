@@ -1,7 +1,7 @@
 # ADR-001: Escolha da Stack Tecnológica 🛠️
 
 **Data:** 2023-10-27
-**Atualizado:** 2026-03-22
+**Atualizado:** 2026-03-25
 **Status:** Aceito (Atualizado)
 
 ## Contexto
@@ -13,7 +13,7 @@ A stack escolhida para o Apex20 é composta por:
 1.  **Polyrepo:** Repositórios Git independentes com submodules (`apex20-docs`, `apex20-contracts`).
 2.  **Backend Core:** Go com framework Chi (Arquitetura Hexagonal).
 3.  **Real-time:** Serviço Go WebSocket customizado.
-4.  **Frontend:** Next.js (App Router) + shadcn/ui.
+4.  **Frontend:** React 19 + TanStack (Router + Start + Query) + shadcn/ui. *(Migrado de Next.js — ver ADR-038)*
 5.  **Mobile:** Expo + NativeWind.
 6.  **Banco de Dados:** PostgreSQL (sqlc para consultas tipadas).
 7.  **Cache/PubSub:** Redis.
@@ -57,7 +57,7 @@ Inbound Adapter → UseCase → Port ← Outbound Adapter
 
 - **Go:** Escolhido pela excelente performance em concorrência, simplicidade de manutenção e binários leves. A arquitetura hexagonal no Go garante isolamento total das regras de negócio.
 - **Git Submodules:** Permitem compartilhar `apex20-contracts` e `apex20-docs` entre todos os repositórios de forma explícita, versionada e sem overhead de tooling de workspace.
-- **Next.js:** Framework React líder para Web, oferecendo SSR/ISR para carregamento rápido e uma excelente experiência de desenvolvedor.
+- **React + TanStack:** TanStack Router + Start oferecem SSR, file-based routing 100% type-safe e output Node.js padrão — simplificando radicalmente o self-hosting em VPS sem as complexidades de cache, ISR e variáveis inlined do Next.js. O core do produto (VTT, canvas, WebSocket) é client-heavy, tornando RSC desnecessário. Ver ADR-038 para análise completa da decisão de migração.
 - **Expo:** Permite desenvolvimento mobile rápido com React Native e acesso simplificado a APIs nativas para recursos futuros.
 - **sqlc:** Diferente de ORMs tradicionais, o sqlc gera código Go tipado a partir de SQL puro, garantindo máxima performance e segurança em tempo de compilação.
 
