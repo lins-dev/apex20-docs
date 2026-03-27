@@ -61,15 +61,122 @@ XState v5                    → Máquinas de estado (sem mudança)
 | App Router (`src/app/`) | TanStack Router (`src/routes/`) |
 | `next/link` | `<Link>` do `@tanstack/react-router` |
 | `next/navigation` (`useRouter`) | `useNavigate` do `@tanstack/react-router` |
-| `next/font` | `fontsource` + CSS variables |
+| `next/font` | `@fontsource-variable/*` referenciados em `head().links` via `?url` |
 | `middleware.ts` (i18n + auth guard) | `beforeLoad` hooks nas rotas do TanStack Router |
-| `generateMetadata()` | Meta options do TanStack Router |
-| `next.config.ts` rewrites (proxy) | `vite.config.ts` → `server.proxy` |
+| `generateMetadata()` | `head()` no objeto de configuração da rota |
+| `next.config.ts` rewrites (proxy) | `app.config.ts` → Nitro `routeRules` |
 | `NEXT_PUBLIC_*` env vars | `VITE_*` env vars (Vite padrão) |
 | Server Components (RSC) | SSR Loaders + Client Components |
 | `headers()` server API | Context de request nos Loaders |
+| `router.refresh()` | `router.invalidate()` |
 | `next start` | `vinxi start` (TanStack Start) |
 | `next build` | `vinxi build` (TanStack Start) |
+
+### Padrões de implementação TanStack Start v1
+
+#### Entry points
+
+O TanStack Start expõe dois entry points explícitos (diferente do Next.js onde são transparentes):
+
+```
+src/client.tsx    → hidrataçãoo no cliente (hydrateRoot)
+src/ssr.tsx       → handler SSR do servidor (createStartHandler)
+```
+
+O arquivo `src/router.ts` exporta a função `getRouter()` — uma factory que cria uma **nova instância** por request (crítico para SSR sem vazamento de estado entre requests).
+
+#### Estrutura do `__root.tsx`
+
+O `__root.tsx` usa `createRootRouteWithContext<RouterContext>()` para injetar o contexto global (auth, etc.) com type-safety em toda a árvore de rotas. CSS global é importado com o sufixo `?url` e declarado em `head().links` — **nunca como import direto no componente** (o Vite trata diferente; import direto não gera `<link>` no HTML SSR):
+
+```tsx
+import globalsCss from "@/styles/globals.css?url";
+
+export const Route = createRootRouteWithContext<RouterContext>()({
+  head: () => ({
+    links: [{ rel: "stylesheet", href: globalsCss }],
+  }),
+  // ...
+});
+```
+
+Scripts inline que devem executar **antes** da hidratação do React (ex: detecção de tema) usam `<ScriptOnce>` de `@tanstack/react-router` — **nunca `dangerouslySetInnerHTML` no JSX**:
+
+```tsx
+import { ScriptOnce } from "@tanstack/react-router";
+
+// A função é serializada para string — não é uma string literal
+const themeScript = `(function(){var t=localStorage.getItem('apex20-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();`;
+
+function RootDocument({ children }: { children: React.ReactNode }) {
+  return (
+    <html suppressHydrationWarning>
+      <head><HeadContent /></head>
+      <body>
+        <ScriptOnce children={themeScript} />
+        {children}
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+```
+
+`HeadContent` vem de `@tanstack/react-router` (não de `@tanstack/start`). Renderiza tudo declarado nos objetos `head()` ao longo da árvore de rotas.
+
+#### Autenticação via RouterContext (Padrão 2)
+
+O estado de auth é um **Zustand store global** (não `useState` local). O store é injetado no `RouterProvider` via `context`, tornando-o disponível com type-safety em qualquer `beforeLoad` via `context.auth`:
+
+```tsx
+// src/router.ts
+interface RouterContext {
+  auth: AuthState; // do Zustand store
+}
+
+export function getRouter() {
+  return createRouter({
+    routeTree,
+    context: { auth: undefined! },
+  });
+}
+
+// src/client.tsx
+function App() {
+  const auth = useAuth(); // Zustand store — global e reativo
+  return <RouterProvider router={router} context={{ auth }} />;
+}
+
+// src/routes/_protected.tsx
+export const Route = createFileRoute("/_protected")({
+  beforeLoad: ({ context }) => {
+    if (!context.auth.isAuthenticated) {
+      throw redirect({ to: "/login" });
+    }
+  },
+});
+```
+
+**Por que Zustand e não `useState`?** `useState` cria estado local por componente — se `SignInForm` chama `useAuth().signIn(token)` e o `App` também chama `useAuth()`, são instâncias separadas. Com Zustand, todos os consumidores de `useAuth()` compartilham o mesmo estado global. Quando `signIn` é chamado em qualquer componente, o `App` (que passa `auth` para o `RouterProvider`) re-renderiza com o novo estado, e a próxima navegação receberá `context.auth.isAuthenticated === true`.
+
+#### Proxy ConnectRPC
+
+O proxy para o backend é configurado via Nitro `routeRules` no `app.config.ts`, não via `vite.server.proxy`. O `vite.server.proxy` funciona apenas no servidor de desenvolvimento Vite; `routeRules` funciona tanto em dev quanto em produção (`vinxi start`):
+
+```ts
+// app.config.ts
+import { defineConfig } from "@tanstack/start/config";
+
+export default defineConfig({
+  server: {
+    routeRules: {
+      "/connect/**": {
+        proxy: { to: `${process.env.VITE_API_URL ?? "http://localhost:8787"}/**` },
+      },
+    },
+  },
+});
+```
 
 ### Critério de aceite da migração
 

@@ -28,7 +28,51 @@ Adotar o **TDD (Test-Driven Development)** como metodologia obrigatória e o uso
 - **Integração (Corpo):** Foco massivo em validar a interação entre o código e os serviços reais (Postgres/Redis).
 - **E2E (Topo):** Fluxos críticos de usuário validados via **Playwright**, simulando a experiência real de ponta a ponta.
 
-### 4. Automação e Pre-commit
+### 4. Testes de Componentes com TanStack Router
+
+Componentes que usam `Link`, `useNavigate`, `useRouteContext` ou qualquer hook do `@tanstack/react-router` **não devem ter o router mockado**. O padrão oficial é usar um **router real em memória** via `createMemoryHistory`.
+
+**Proibido:**
+```ts
+vi.mock("@tanstack/react-router", () => ({ useNavigate: () => mockNavigate }));
+```
+
+**Correto — utilitário compartilhado em `src/test/utils.tsx`:**
+```tsx
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRoute,
+  createRouter,
+  RouterProvider,
+} from "@tanstack/react-router";
+import { render, act } from "@testing-library/react";
+
+export function createTestRouter(component: React.ReactNode) {
+  const rootRoute = createRootRoute({ component: () => <>{component}</> });
+  const indexRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: "/",
+    component: () => <>{component}</>,
+  });
+  return createRouter({
+    history: createMemoryHistory({ initialEntries: ["/"] }),
+    routeTree: rootRoute.addChildren([indexRoute]),
+    defaultPendingMinMs: 0,
+  });
+}
+
+export async function renderWithRouter(component: React.ReactNode) {
+  const router = createTestRouter(component);
+  const result = render(<RouterProvider router={router} />);
+  await act(() => router.navigate({ to: "/" }));
+  return { router, ...result };
+}
+```
+
+**Navegação em testes:** verificar `router.state.location.pathname` em vez de assertar mocks de `push`/`navigate`.
+
+### 5. Automação e Pre-commit
 - Os testes unitários e de integração leves devem ser executados localmente via Git Hooks antes de qualquer commit (ADR-006).
 - O pipeline de CI/CD (GitHub Actions) executará a suíte completa de testes antes de qualquer merge para as branches `dev` ou `master`.
 

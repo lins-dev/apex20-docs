@@ -15,26 +15,27 @@ A lógica principal será organizada no diretório `modules/`, onde cada subpast
 
 ```text
 src/
-├── routes/           # TanStack Router — Definições de Rotas e Layouts (substitui src/app/ do Next.js)
-│   ├── __root.tsx    # Root layout (html, body, fonts, theme script, QueryClientProvider)
-│   ├── index.tsx     # Rota / (homepage)
-│   ├── login.tsx     # Rota /login
-│   ├── signup.tsx    # Rota /signup
+├── routes/             # TanStack Router — Definições de Rotas e Layouts (substitui src/app/ do Next.js)
+│   ├── __root.tsx      # Root layout (html, body, HeadContent, ScriptOnce, Scripts)
+│   ├── index.tsx       # Rota / (homepage)
+│   ├── login.tsx       # Rota /login
+│   ├── signup.tsx      # Rota /signup
 │   └── _protected.tsx  # Layout para rotas autenticadas (/dashboard, /campaigns, /vtt)
-├── modules/          # Funcionalidades Isoladas (O "Cérebro" do App)
-│   ├── <feature>/    # Nome da funcionalidade (ex: grid, chat, auth)
+├── modules/            # Funcionalidades Isoladas (O "Cérebro" do App)
+│   ├── <feature>/      # Nome da funcionalidade (ex: grid, chat, auth)
 │   │   ├── components/ # Componentes exclusivos desta funcionalidade
 │   │   ├── hooks/      # Hooks reativos específicos
 │   │   ├── actions/    # Chamadas de API/RPC (ConnectRPC)
 │   │   ├── store/      # Estado local (Zustand/XState)
 │   │   └── types.ts    # Definições de tipos locais
-├── components/       # Componentes globais e UI (Layout, Nav, Modais)
-├── hooks/            # Hooks de infraestrutura (useSocket, useTheme)
-├── lib/              # Configurações de terceiros (ConnectRPC Client, Auth, i18n guards)
-├── styles/           # globals.css e tokens de estilo locais
-├── router.ts         # Instância do createRouter() com a routeTree gerada
-├── entry-client.tsx  # Entry point do cliente (RouterProvider + QueryClientProvider)
-└── entry-server.tsx  # Entry point do servidor SSR (StartServer)
+├── components/         # Componentes globais e UI (Layout, Nav, Modais)
+├── hooks/              # Hooks de infraestrutura (useSocket, useTheme)
+├── lib/                # Configurações de terceiros (ConnectRPC Client, Auth, i18n helpers)
+├── styles/             # globals.css e tokens de estilo locais
+├── test/               # Utilitários de teste compartilhados (renderWithRouter, etc.)
+├── router.ts           # Factory getRouter() — nova instância por request (crítico para SSR)
+├── client.tsx          # Entry point do cliente (hydrateRoot + RouterProvider com context)
+└── ssr.tsx             # Entry point do servidor SSR (createStartHandler)
 ```
 
 ### 2. Regras de Dependência

@@ -41,6 +41,56 @@ campaign_members (id, campaign_id, user_id, role, created_at, updated_at)
 - **Positivas**: Desacoplamento total entre os serviços para validação de identidade; facilidade de integração com Mobile (Expo) e Web (Next.js).
 - **Negativas**: Tokens não podem ser facilmente revogados antes da expiração (requer Blacklist em Redis se a revogação imediata for crítica); payload do token aumenta o overhead de cada requisição (manter o JWT enxuto).
 
+## Integração Frontend (apex20-web)
+
+### Armazenamento do Token
+
+O `access_token` JWT é armazenado em **cookie HTTP** (`apex20-token`) com `SameSite=Lax` e `max-age=86400` (24h). Cookie é preferido a `localStorage` por ser automaticamente enviado em requisições SSR e por permitir leitura server-side em `beforeLoad` hooks futuros.
+
+### Estado Global de Autenticação (Zustand)
+
+O estado de auth é um **Zustand store** — não `useState` local. Isso é obrigatório para o padrão de RouterContext do TanStack Router (ADR-038): o store precisa ser compartilhado entre o componente que injeta o contexto (`App`) e os componentes que fazem `signIn`/`signOut` (formulários). Com `useState`, cada chamador teria sua própria instância independente.
+
+```ts
+// src/modules/auth/hooks/use-auth.ts
+export const useAuth = create<AuthState>((set) => ({
+  ...buildState(getToken()), // inicializa lendo o cookie
+  signIn(token) { setToken(token); set(buildState(token)); },
+  signOut()     { clearToken(); set(buildState(null)); },
+}));
+```
+
+### Guard de Rotas (RouterContext Pattern)
+
+O store é injetado no `RouterProvider` via `context`, disponibilizando `auth` com type-safety em todos os `beforeLoad` da árvore de rotas:
+
+```tsx
+// src/client.tsx
+function App() {
+  const auth = useAuth();
+  return <RouterProvider router={router} context={{ auth }} />;
+}
+
+// src/routes/_protected.tsx — rotas que exigem autenticação
+export const Route = createFileRoute("/_protected")({
+  beforeLoad: ({ context }) => {
+    if (!context.auth.isAuthenticated) throw redirect({ to: "/login" });
+  },
+});
+
+// src/routes/login.tsx — redireciona usuário já autenticado
+export const Route = createFileRoute("/login")({
+  beforeLoad: ({ context }) => {
+    if (context.auth.isAuthenticated) throw redirect({ to: "/" });
+  },
+});
+```
+
+### Decode do Payload (Client-side)
+
+Claims `sub` (userId), `is_admin` e `exp` são extraídos do JWT no cliente via decode Base64 do payload (sem verificação de assinatura — a verificação ocorre no servidor). Isso é seguro pois o cliente não toma decisões de segurança baseado no claim; serve apenas para exibição de UI e pré-checagem de expiração.
+
 ## Alternativas Consideradas
 - **HS256 (Symmetric)**: Rejeitado porque exige que todos os serviços compartilhem o mesmo segredo, aumentando o risco de vazamento.
 - **Opaque Tokens**: Rejeitado pelo custo de latência de consultar um store central (Redis/DB) em cada validação.
+- **useState para auth no frontend**: Rejeitado — cada componente teria sua própria instância do estado. Impossibilita o padrão de RouterContext onde o `App` (fora do router) e os formulários de auth precisam do mesmo estado global.
