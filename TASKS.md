@@ -55,21 +55,21 @@ Este documento detalha as Sprints planejadas para o desenvolvimento do **Apex20*
 - [x] Boilerplate da aplicação Next.js com shadcn/ui.
 - [x] Setup inicial do módulo i18n em `apex20-web/src/i18n/` (EN, PT-BR, ES, FR).
 
-## 🔄 Sprint M: Migração Next.js → React + TanStack (🔴 Pendente — 🔥 PRIORIDADE MÁXIMA)
+## 🔄 Sprint M: Migração Next.js → React + TanStack (🟡 Em Progresso — 🔥 PRIORIDADE MÁXIMA)
 **Objetivo:** Remover completamente o Next.js do `apex20-web` e migrar para React 19 + TanStack (Router + Start + Query), mantendo 100% da funcionalidade e todos os testes passando.
 **Branch:** `refactor/nextjs-to-tanstack` → PR para `dev`
 **ADR:** [ADR-038](adrs/ADR-038-nextjs-to-tanstack-migration.md)
 **Detalhamento:** Ver [docs/tasks/sprint-migration.md](tasks/sprint-migration.md)
 **Bloqueio:** Todas as demais sprints estão suspensas até conclusão desta.
 
-- [ ] Fase 1: Remover Next.js, instalar TanStack Start + Router + Query, configurar `app.config.ts`.
-- [ ] Fase 2: Criar estrutura `src/routes/` com TanStack Router (substitui `src/app/`).
-- [ ] Fase 3: Reimplementar middleware (i18n + auth guard) como `beforeLoad` hooks.
-- [ ] Fase 4: Substituir todos os imports `next/*` (`next/link`, `next/navigation`, `next/font`).
-- [ ] Fase 5: Substituir `generateMetadata()` pela API de `head` do TanStack Router.
-- [ ] Fase 6: Atualizar testes (remover mocks de Next.js, adaptar para TanStack Router).
-- [ ] Fase 7: Validar testes visuais (Playwright/Storybook).
-- [ ] Fase 8: Build de produção sem erros, validação funcional completa.
+- [x] Fase 1: Remover Next.js, instalar TanStack Start + Router + Query, configurar `app.config.ts`. _(commit `93d0671`)_
+- [x] Fase 2: Criar estrutura `src/routes/` com TanStack Router (substitui `src/app/`). _(commit `dc91a79`)_
+- [x] Fase 3: Reimplementar middleware (i18n + auth guard) como `beforeLoad` hooks. _(commit `dc91a79`)_
+- [x] Fase 4: Substituir todos os imports `next/*` (`next/link`, `next/navigation`, `next/font`). _(commit `dc91a79`)_
+- [x] Fase 5: Substituir `generateMetadata()` pela API de `head` do TanStack Router. _(commit `dc91a79`)_
+- [x] Fase 6: Atualizar testes (remover mocks de Next.js, adaptar para TanStack Router). _(80/80 testes — commit `dc91a79`)_
+- [x] Fase 7: Validar testes visuais (Playwright/Storybook). _(Storybook 8→10 + correções de infra — commit `05ae4ba`)_
+- [x] Fase 8: Build de produção sem erros, validação funcional completa. _(Typecheck ✓ Lint ✓ Tests 80/80 ✓ — commits `dc91a79` e `05ae4ba`)_
 - [ ] Fase 9: Limpeza final, PR `refactor/nextjs-to-tanstack` → `dev` com CI verde.
 
 ---
