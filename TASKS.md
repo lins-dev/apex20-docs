@@ -55,12 +55,10 @@ Este documento detalha as Sprints planejadas para o desenvolvimento do **Apex20*
 - [x] Boilerplate da aplicação Next.js com shadcn/ui.
 - [x] Setup inicial do módulo i18n em `apex20-web/src/i18n/` (EN, PT-BR, ES, FR).
 
-## 🔄 Sprint M: Migração Next.js → React + TanStack (🟡 Em Progresso — 🔥 PRIORIDADE MÁXIMA)
+## 🔄 Sprint M: Migração Next.js → React + TanStack (🟢 Concluída)
 **Objetivo:** Remover completamente o Next.js do `apex20-web` e migrar para React 19 + TanStack (Router + Start + Query), mantendo 100% da funcionalidade e todos os testes passando.
-**Branch:** `refactor/nextjs-to-tanstack` → PR para `dev`
 **ADR:** [ADR-038](adrs/ADR-038-nextjs-to-tanstack-migration.md)
 **Detalhamento:** Ver [docs/tasks/sprint-migration.md](tasks/sprint-migration.md)
-**Bloqueio:** Todas as demais sprints estão suspensas até conclusão desta.
 
 - [x] Fase 1: Remover Next.js, instalar TanStack Start + Router + Query, configurar `app.config.ts`. _(commit `93d0671`)_
 - [x] Fase 2: Criar estrutura `src/routes/` com TanStack Router (substitui `src/app/`). _(commit `dc91a79`)_
@@ -70,11 +68,11 @@ Este documento detalha as Sprints planejadas para o desenvolvimento do **Apex20*
 - [x] Fase 6: Atualizar testes (remover mocks de Next.js, adaptar para TanStack Router). _(80/80 testes — commit `dc91a79`)_
 - [x] Fase 7: Validar testes visuais (Playwright/Storybook). _(Storybook 8→10 + correções de infra — commit `05ae4ba`)_
 - [x] Fase 8: Build de produção sem erros, validação funcional completa. _(Typecheck ✓ Lint ✓ Tests 80/80 ✓ — commits `dc91a79` e `05ae4ba`)_
-- [ ] Fase 9: Limpeza final, PR `refactor/nextjs-to-tanstack` → `dev` com CI verde.
+- [x] Fase 9: Limpeza final, PR `refactor/nextjs-to-tanstack` → `dev` com CI verde. _(fix `7f23dd3`, PR mergeado 2026-03-31)_
 
 ---
 
-## ⚔️ Sprint 2: Mecânicas de Jogo e Sincronização (⚙️ Suspensa — aguardando Sprint M)
+## ⚔️ Sprint 2: Mecânicas de Jogo e Sincronização (🟡 Em Progresso)
 **Objetivo:** Implementar o grid e o sistema de combate em tempo real.
 
 - [x] Auth API (SignUp/SignIn via ConnectRPC, Argon2, JWT RS256).
