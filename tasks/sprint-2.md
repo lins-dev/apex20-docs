@@ -4,8 +4,8 @@
 **Status Atual:** 🟡 Em Progresso
 ---
 
-## 1. Fundação do Front Web (Next.js) e Identidade Visual
-- [x] **Scaffold Next.js:** Inicializar `apex20-web` usando Next.js 16+ (App Router) e TypeScript.
+## 1. Fundação do Front Web (TanStack Start) e Identidade Visual
+- [x] **Scaffold:** Inicializar `apex20-web` com Next.js 16 (App Router) → migrado para **React 19 + TanStack Start + Vite** (Sprint M / ADR-038).
 - [x] **Definição do Padrão Visual:** Estabelecer o guia de estilo para componentes (Typography, Spacing, Shadow patterns) em `apex20-web/src/ui/` para evitar estilos genéricos.
 - [x] **Integration UI:** Configurar o consumo de `@/ui` e tokens do Tailwind local.
 - [x] **Landing Page (MVP):** Criar a página inicial com estética "Linear-like", focada em alta performance e conversão.
@@ -19,11 +19,11 @@
   - 4 locales: `pt-br`, `en`, `es`, `fr`
   - `t()` com dot-notation (ex: `t("landing.nav.features", locale)`)
   - `detectLocale()` via header `Accept-Language` com fallback para `"en"`
-  - Middleware Next.js detecta locale por cookie > Accept-Language > fallback
+  - Locale detectado via `beforeLoad` hook do TanStack Router (cookie > Accept-Language > fallback)
   - `LanguageSwitcher` dropdown customizado com bandeiras SVG (Brasil, EUA, Espanha, França)
 - [x] **Testes Unitários (TDD):** Configurar Vitest e implementar testes com abordagem red→green.
-  - `vitest.config.ts` com jsdom e path aliases
-  - 50+ testes passando: i18n, locale-detection, language-switcher, navbar, button, clients, transport
+  - `vitest.config.ts` com jsdom e path aliases; arquivos de teste incluídos no tsconfig principal
+  - 86 testes passando: i18n, locale-detection, language-switcher, navbar, button, clients, transport, nivo
   - Cobertura: detecção de locale, dropdown de idioma, menu hamburguer, links traduzidos, ConnectRPC client
 - [x] **Testes Visuais:** Implementar testes de regressão visual nos componentes da landing page.
   - Decisão (ADR-031): Storybook + Playwright visual regression (Docker para snapshots determinísticos)
@@ -31,7 +31,7 @@
   - Specs Playwright: `playwright/visual/landing.spec.ts` e `playwright/visual/ui.spec.ts`
 - [x] **ConnectRPC Client:** Configurar o cliente de comunicação tipada para consumir os contratos do submodule `./contracts/gen/ts/` (via alias `@contracts/*`).
   - Implementado em `src/lib/api/clients.ts` e `src/lib/api/transport.ts`
-  - Env vars via `.env.example` (NEXT_PUBLIC_API_URL)
+  - Env vars via `.env.example` (`VITE_API_URL`); proxy via Nitro `routeRules` em `vite.config.mts`
 
 ## 2. Autenticação e Cadastro (Novo 🔐)
 - [x] **Modelagem de Roles (DB + Contratos + Domain):** Refatorar toda a camada de dados para roles campaign-scoped (ADR-002):
