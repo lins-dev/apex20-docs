@@ -132,7 +132,7 @@
   - Tests: mock de R2, handler de upload, headers de cache
 
 ## 6. Padronização de Pacotes Frontend (ADR-019)
-- [ ] **Adotar pacotes padrão ausentes no `apex20-web`:** Incorporar as bibliotecas definidas como padrão em todos os projetos frontend:
+- [x] **Adotar pacotes padrão ausentes no `apex20-web`:** Incorporar as bibliotecas definidas como padrão em todos os projetos frontend:
   - `zod` — validação de esquemas (forms e I/O de API)
   - `react-hook-form` + `@hookform/resolvers` — gerenciamento de formulários (necessário para Auth UI)
   - `@tanstack/react-query` — estado de servidor e cache de dados
