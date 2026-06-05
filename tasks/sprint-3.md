@@ -13,6 +13,7 @@
 ## 2. Gestao de Estado e Sincronizacao
 - [ ] **State Orchestration:** Configurar **Zustand** para estado global e **XState** para maquinas de estado de jogo (ADR-025).
   - [x] Confirmar `zustand@^5` e `xstate@^5` no `package.json` (ja listados no ADR-006)
+  - [x] Criar `src/machines/game-session.machine.ts`: estados `idle | connecting | connected | reconnecting | disconnected`
   - [x] Criar `src/machines/token-movement.machine.ts`: estados `idle | dragging | pending | confirmed | rejected`
   - [x] Tests: `useSessionStore` e transicoes das maquinas com Vitest
 - [ ] **WebSocket Client:** Implementar o hook de conexao resiliente com o `ws-service` (exponential backoff).
