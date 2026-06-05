@@ -5,7 +5,12 @@
 
 ---
 
-## 1. Gestao de Estado e Sincronizacao
+## 1. Polimento e Debitos Tecnicos (Migracao TanStack)
+- [x] **Variaveis de Ambiente:** Corrigir `src/lib/api/transport.ts` para usar `import.meta.env.VITE_API_URL`.
+- [x] **Limpeza de Arquivos:** Remover pasta `.next/` residual e referencias ao Next.js no `README.md`.
+- [x] **GitIgnore:** Garantir que `.next/` e outros artefatos do Next.js sejam removidos do rastreamento.
+
+## 2. Gestao de Estado e Sincronizacao
 - [ ] **State Orchestration:** Configurar **Zustand** para estado global e **XState** para maquinas de estado de jogo (ADR-025).
   - Confirmar `zustand@^5` e `xstate@^5` no `package.json` (ja listados no ADR-006)
   - Criar `src/store/session.ts`: `useSessionStore` com `{ campaignId, sceneId, connected }`
@@ -24,7 +29,7 @@
   - Implementar handshake WS: enviar `{ token }` como primeiro frame apos conexao
   - Tests: transport com token, guard redirect, payload do handshake
 
-## 2. Sistema de Grid (MVP)
+## 3. Sistema de Grid (MVP)
 - [ ] **Grid Canvas/SVG:** Implementar a renderizacao do grid baseada em coordenadas.
   - Criar modulo `src/modules/grid/` com estrutura: `components/`, `hooks/`, `types/`
   - Criar `types/grid.ts`: `GridCell { x, y }`, `Token { id, x, y, imageUrl, ownerId }`
@@ -46,7 +51,7 @@
   - Bloquear drag em tokens locked por outro usuario
   - Tests: token locked renderiza indicador visual, drag e bloqueado
 
-## 3. Mecanicas Core (Backend Support)
+## 4. Mecanicas Core (Backend Support)
 - [ ] **Server-side Roller:** Implementar gerador de dados no `backend` usando `crypto/rand` (ADR-016).
   - Criar `internal/domain/dice/roller.go`: metodo `Roll(sides int) (int, error)` via `crypto/rand`
   - Criar `internal/domain/dice/roll_result.go`: struct `RollResult { Dice, Result, Timestamp }`
@@ -68,7 +73,7 @@
   - Endpoint `GET /assets/{hash}/{filename}`: proxy com `Cache-Control: public, max-age=31536000, immutable`
   - Tests: mock de R2, handler de upload, headers de cache
 
-## 4. Persistencia e Infra
+## 5. Persistencia e Infra
 - [ ] **Migrations Sprint 3:** Criar tabelas de `campaigns` e `scenes` com suporte a snapshots JSONB (ADR-017).
   - `006_create_scenes.sql`: `scenes (id UUID PK, campaign_id UUID FK, name TEXT, order INT, created_at, updated_at, deleted_at)`
   - `007_add_scene_snapshot.sql`: coluna `snapshot JSONB NOT NULL DEFAULT '{}'` em `scenes` (estado serializavel: tokens, fog, background)
