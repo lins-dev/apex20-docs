@@ -22,11 +22,11 @@
   - [x] Expor `status: 'idle' | 'connecting' | 'connected' | 'reconnecting' | 'error'`
   - [x] Integrar com `useSessionStore` para sincronizar status global
   - [x] Tests: mock de WebSocket, ciclos connect/disconnect/reconnect
-- [ ] **Auth Integration:** Implementar o fluxo de persistencia e envio do JWT (RS256) nos headers das requisicoes e no Handshake do WS (ADR-002).
-  - Adicionar `token: string | null` e `setToken()` ao `useAuthStore` (Zustand)
-  - Atualizar `src/lib/api/transport.ts`: injetar `Authorization: Bearer <token>` em todas as chamadas ConnectRPC
-  - Implementar handshake WS: enviar `{ token }` como primeiro frame apos conexao
-  - Tests: transport com token, guard redirect, payload do handshake
+- [x] **Auth Integration:** Implementar o fluxo de persistencia e envio do JWT (RS256) nos headers das requisicoes e no Handshake do WS (ADR-002).
+  - [x] Adicionar `token: string | null` e `setToken()` ao `useAuthStore` (Zustand)
+  - [x] Atualizar `src/lib/api/transport.ts`: injetar `Authorization: Bearer <token>` em todas as chamadas ConnectRPC
+  - [x] Implementar handshake WS: enviar `{ token }` como primeiro frame apos conexao
+  - [x] Tests: transport com token, guard redirect, payload do handshake
 
 ## 3. Sistema de Grid (MVP)
 - [ ] **Grid Canvas/SVG:** Implementar a renderizacao do grid baseada em coordenadas.
