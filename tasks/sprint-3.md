@@ -16,12 +16,12 @@
   - [x] Criar `src/machines/game-session.machine.ts`: estados `idle | connecting | connected | reconnecting | disconnected`
   - [x] Criar `src/machines/token-movement.machine.ts`: estados `idle | dragging | pending | confirmed | rejected`
   - [x] Tests: `useSessionStore` e transicoes das maquinas com Vitest
-- [ ] **WebSocket Client:** Implementar o hook de conexao resiliente com o `ws-service` (exponential backoff).
-  - Criar `src/hooks/use-websocket.ts`: wrapper sobre WebSocket nativo com reconexao automatica
-  - Backoff exponencial: 1s -> 2s -> 4s -> 8s -> 16s -> 30s (cap)
-  - Expor `status: 'idle' | 'connecting' | 'connected' | 'reconnecting' | 'error'`
-  - Integrar com `useSessionStore` para sincronizar status global
-  - Tests: mock de WebSocket, ciclos connect/disconnect/reconnect
+- [x] **WebSocket Client:** Implementar o hook de conexao resiliente com o `ws-service` (exponential backoff).
+  - [x] Criar `src/hooks/use-websocket.ts`: wrapper sobre WebSocket nativo com reconexao automatica
+  - [x] Backoff exponencial: 1s -> 2s -> 4s -> 8s -> 16s -> 30s (cap)
+  - [x] Expor `status: 'idle' | 'connecting' | 'connected' | 'reconnecting' | 'error'`
+  - [x] Integrar com `useSessionStore` para sincronizar status global
+  - [x] Tests: mock de WebSocket, ciclos connect/disconnect/reconnect
 - [ ] **Auth Integration:** Implementar o fluxo de persistencia e envio do JWT (RS256) nos headers das requisicoes e no Handshake do WS (ADR-002).
   - Adicionar `token: string | null` e `setToken()` ao `useAuthStore` (Zustand)
   - Atualizar `src/lib/api/transport.ts`: injetar `Authorization: Bearer <token>` em todas as chamadas ConnectRPC
