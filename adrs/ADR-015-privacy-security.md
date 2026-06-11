@@ -28,6 +28,13 @@ Adotar o princípio de **Privacy by Design** e estabelecer camadas rigorosas de 
 - **Isolamento de Tenant**: Garantir que as consultas ao banco de dados sempre incluam filtros de `user_id` ou `campaign_id` para evitar que um jogador acesse dados de outra mesa sem permissão.
 - **WAF (Web Application Firewall)**: Utilizar o firewall da Cloudflare para mitigar ataques DDoS e proteger as rotas de API contra explorações comuns.
 
+### Segurança da Supply Chain (Padrão Ouro)
+Para mitigar ataques de sequestro de pacotes e malwares recém-lançados, o projeto adota o "Padrão Ouro" de segurança NPM:
+1.  **Zero Trust Scripts**: Bloqueio mandatório de scripts de instalação (`ignore-scripts=true`). Scripts necessários devem ser executados via allowlist ou rebuild manual.
+2.  **Período de Resfriamento (Cooldown)**: Rejeição automática de qualquer pacote publicado há menos de **7 dias** (`min-release-age=7d`).
+3.  **Pinagem Estrita**: Todas as dependências devem ter versões exatas no `package.json` (`save-exact=true`), sem uso de `^` ou `~`.
+4.  **Auditoria Nativa**: Instalações são interrompidas se houver vulnerabilidades de alto risco (`audit-level=high`).
+
 ## Justificativa
 - **Confiança do Usuário**: Protege a propriedade intelectual dos mestres e a privacidade dos jogadores.
 - **Redução de Riscos**: Minimiza o impacto de possíveis vazamentos de dados através da minimização e criptografia.

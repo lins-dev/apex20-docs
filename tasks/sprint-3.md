@@ -10,7 +10,17 @@
 - [x] **Limpeza de Arquivos:** Remover pasta `.next/` residual e referencias ao Next.js no `README.md`.
 - [x] **GitIgnore:** Garantir que `.next/` e outros artefatos do Next.js sejam removidos do rastreamento.
 
-## 2. Gestao de Estado e Sincronizacao
+## 2. Segurança da Supply Chain e Auditoria (Prioridade Máxima)
+- [x] **Configuração Zero Trust:** Implementar `.npmrc` com `ignore-scripts`, `min-release-age=7d` e `save-exact=true` (ADR-015).
+- [ ] **Instalação Blindada:** Criar script `scripts/secure-install.js` para validação rigorosa de idade de pacotes (constante 7 dias) e integração com workflow.
+- [ ] **Correção de Vulnerabilidades:** Atualizar pacotes críticos seguindo as regras de segurança:
+    - [ ] `vitest` (Critical)
+    - [ ] `vite` (High)
+    - [ ] `h3` / `nitropack` (High)
+    - [ ] `lodash` / `defu` (High)
+- [ ] **Enforcement de Segurança:** Adicionar Git Hook (Husky) para impedir commits com vulnerabilidades não auditadas.
+
+## 3. Gestao de Estado e Sincronizacao
 - [ ] **State Orchestration:** Configurar **Zustand** para estado global e **XState** para maquinas de estado de jogo (ADR-025).
   - [x] Confirmar `zustand@^5` e `xstate@^5` no `package.json` (ja listados no ADR-006)
   - [x] Criar `src/machines/game-session.machine.ts`: estados `idle | connecting | connected | reconnecting | disconnected`
