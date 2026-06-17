@@ -72,21 +72,48 @@ Este documento detalha as Sprints planejadas para o desenvolvimento do **Apex20*
 
 ---
 
-## ⚔️ Sprint 2: Mecânicas de Jogo e Sincronização (🟡 Em Progresso)
-**Objetivo:** Implementar o grid e o sistema de combate em tempo real.
+## ⚔️ Sprint 2: Mecânicas de Jogo e Sincronização (🟢 Concluída)
+**Objetivo:** Implementar a base de autenticação, gestão de campanhas e infraestrutura inicial de UI.
+**Detalhamento:** Ver [docs/tasks/sprint-2.md](tasks/sprint-2.md)
 
 - [x] Auth API (SignUp/SignIn via ConnectRPC, Argon2, JWT RS256).
 - [x] Auth UI (`modules/auth`: SignInForm, SignUpForm, useAuth, route guards).
 - [x] CRUD de Campanhas (criação, listagem, edição, exclusão soft-delete).
 - [x] Campaign Members API (convidar/remover jogadores).
-- [ ] CRUD de Personagens (Fichas dinâmicas).
-- [ ] Sistema de Grid com movimentação de tokens (Optimistic UI).
-- [ ] Rolagem de dados e Chat sincronizado via WebSocket.
-- [ ] Implementação do Storage via **Cloudflare R2** (Maps, Tokens e Assets).
-- [ ] Pipeline de Otimização Automática de Assets (WebP/AVIF).
-- [ ] Sistema de internacionalização (i18n) funcional em todos os apps.
+- [x] Sistema de internacionalização (i18n) funcional em todos os apps.
 
-## 📱 Sprint 3: Mobile e Experiência do Jogador
+## 🛡️ Sprint 3: Segurança da Supply Chain (Frontend) (🟡 Em Progresso)
+**Objetivo:** Garantir a integridade da supply chain do frontend e consolidar a gestão de estado inicial.
+**Detalhamento:** Ver [docs/tasks/sprint-3.md](tasks/sprint-3.md)
+
+- [x] Configuração Zero Trust (.npmrc).
+- [ ] Implementação do `secure-install.js`.
+- [ ] Correção de vulnerabilidades críticas/altas (Vite, Vitest, H3).
+- [ ] Configuração de Git Hooks de segurança (Husky).
+- [ ] State Orchestration (Zustand + XState).
+- [x] WebSocket Client resiliente.
+
+## 📐 Sprint 4: Sistema de Grid (MVP) (🔴 Não Iniciado)
+**Objetivo:** Implementar o grid e o sistema de movimentação de tokens em tempo real.
+**Detalhamento:** Ver [docs/tasks/sprint-4.md](tasks/sprint-4.md)
+
+- [ ] Renderização de Grid Canvas/SVG.
+- [ ] Movimentação Otimista (Optimistic UI).
+- [ ] Sistema de Soft Locking de tokens.
+- [ ] Reconciliação de estado via servidor.
+
+## 💾 Sprint 5: Backend & Persistência (🔴 Não Iniciado)
+**Objetivo:** Implementar as mecânicas core de backend, persistência de estado e segurança da supply chain do backend.
+**Detalhamento:** Ver [docs/tasks/sprint-5.md](tasks/sprint-5.md)
+
+- [ ] Segurança da Supply Chain (Backend - govulncheck).
+- [ ] Server-side Roller (RNG via `crypto/rand`).
+- [ ] Isolamento de Salas no WebSocket (Redis).
+- [ ] Implementação do Storage via **Cloudflare R2** (Maps, Tokens e Assets).
+- [ ] CRUD de Personagens (Fichas dinâmicas).
+- [ ] Migrações de Cenas e Snapshots JSONB.
+
+## 📱 Sprint 6: Mobile e Experiência do Jogador
 **Objetivo:** Lançar o app mobile e refinar a UI.
 
 - [ ] Desenvolvimento do App Mobile (Expo + NativeWind).
@@ -95,7 +122,7 @@ Este documento detalha as Sprints planejadas para o desenvolvimento do **Apex20*
 - [ ] Sistema de autenticação (OAuth2/JWT compartilhado entre API e WS).
 - [ ] Início da implementação do **Foundry VTT Importer** (JSON mapping).
 
-## 🤖 Sprint 4: Inteligência e Visão
+## 🤖 Sprint 7: Inteligência e Visão
 **Objetivo:** Adicionar os recursos avançados de IA e CV.
 
 - [ ] Integração **MediaPipe** para reconhecimento de gestos (Lançar dados).
@@ -104,7 +131,7 @@ Este documento detalha as Sprints planejadas para o desenvolvimento do **Apex20*
 - [ ] Disparo de resumos via Microserviço externo (WhatsApp, Telegram, E-mail).
 - [ ] Refinamento da iluminação dinâmica e névoa de guerra (FOW).
 
-## 💻 Sprint 5: Ecossistema Desktop e Polimento
+## 💻 Sprint 8: Ecossistema Desktop e Polimento
 **Objetivo:** Criar a versão desktop e preparar para o lançamento.
 
 - [ ] Empacotamento Desktop: Escolha final entre **Tauri** ou **Electron**.
