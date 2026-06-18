@@ -82,24 +82,24 @@ Este documento detalha as Sprints planejadas para o desenvolvimento do **Apex20*
 - [x] Campaign Members API (convidar/remover jogadores).
 - [x] Sistema de internacionalização (i18n) funcional em todos os apps.
 
-## 🛡️ Sprint 3: Segurança da Supply Chain (Frontend) (🟡 Em Progresso)
+## 🛡️ Sprint 3: Segurança da Supply Chain (Frontend) (🟢 Concluída)
 **Objetivo:** Garantir a integridade da supply chain do frontend e consolidar a gestão de estado inicial.
 **Detalhamento:** Ver [docs/tasks/sprint-3.md](tasks/sprint-3.md)
 
 - [x] Configuração Zero Trust (.npmrc).
-- [ ] Implementação do `secure-install.js`.
-- [ ] Correção de vulnerabilidades críticas/altas (Vite, Vitest, H3).
-- [ ] Configuração de Git Hooks de segurança (Husky).
-- [ ] State Orchestration (Zustand + XState).
+- [x] Implementação do `secure-install.js`.
+- [x] Correção de vulnerabilidades críticas/altas (Vite, Vitest, H3).
+- [x] Configuração de Git Hooks de segurança (Husky).
+- [x] State Orchestration (Zustand + XState).
 - [x] WebSocket Client resiliente.
 
-## 📐 Sprint 4: Sistema de Grid (MVP) (🔴 Não Iniciado)
+## 📐 Sprint 4: Sistema de Grid (MVP) (🟡 Em Progresso)
 **Objetivo:** Implementar o grid e o sistema de movimentação de tokens em tempo real.
 **Detalhamento:** Ver [docs/tasks/sprint-4.md](tasks/sprint-4.md)
 
-- [ ] Renderização de Grid Canvas/SVG.
-- [ ] Movimentação Otimista (Optimistic UI).
-- [ ] Sistema de Soft Locking de tokens.
+- [x] Renderização de Grid Canvas/SVG.
+- [x] Movimentação Otimista (Optimistic UI).
+- [x] Sistema de Soft Locking de tokens.
 - [ ] Reconciliação de estado via servidor.
 
 ## 💾 Sprint 5: Backend & Persistência (🔴 Não Iniciado)
