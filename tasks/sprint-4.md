@@ -1,30 +1,27 @@
 # Detalhamento Tecnico: Sprint 4
 
 **Objetivo:** Implementar o Sistema de Grid (MVP) com renderização interativa e sincronização básica de tokens.
-**Status Atual:** 🔴 Não Iniciado
+**Status Atual:** 🟡 Em Progresso
 
 ---
 
 ## 1. Sistema de Grid (MVP)
-- [ ] **Grid Canvas/SVG:** Implementar a renderizacao do grid baseada em coordenadas.
+- [x] **Grid Canvas/SVG:** Implementar a renderizacao do grid baseada em coordenadas.
   - Criar modulo `src/modules/grid/` com estrutura: `components/`, `hooks/`, `types/`
-  - Criar `types/grid.ts`: `GridCell { x, y }`, `Token { id, x, y, imageUrl, ownerId }`
+  - Utilizar os tipos Protobuf gerados (`Vec2`, `TokenDelta`) em substituição a tipos locais.
   - Criar `components/GridCanvas.tsx`: renderizacao SVG do grid quadrado com tamanho de celula configuravel
   - Criar `components/GridToken.tsx`: token SVG posicionado por coordenadas de grid
-  - Criar `hooks/use-grid.ts`: estado local do grid (celulas, mapa de tokens)
+  - Criar `store/grid-store.ts`: estado local do grid (configurações, mapa de tokens)
   - Tests: `GridCanvas` renderiza celulas corretas, `GridToken` posiciona via coordenadas
-- [ ] **Optimistic Movement:** Implementar o arraste de tokens com atualizacao instantanea local e reconciliacao via servidor (ADR-011).
+- [x] **Optimistic Movement:** Implementar o arraste de tokens com atualizacao instantanea local e reconciliacao via servidor (ADR-011).
   - Criar `hooks/use-token-drag.ts`: drag com `pointermove` / `pointerup`
   - Ao soltar: aplicar movimento localmente (Optimistic UI) e emitir evento WS `TOKEN_MOVE`
   - Ao receber confirmacao WS: confirmar posicao (sem mudanca visual se coincide)
   - Ao receber erro/conflito WS: reverter para posicao anterior (rollback)
-  - Integrar com `token-movement.machine.ts` para controle de estado do drag
   - Tests: drag emite evento correto, rollback reverte posicao em caso de rejeicao
-- [ ] **Soft Locking:** Implementar sinais visuais quando um token esta sendo manipulado por outro jogador.
-  - Definir eventos WS: `TOKEN_LOCK { tokenId, lockedBy }` / `TOKEN_UNLOCK { tokenId }` em `apex20-contracts`
-  - Adicionar `lockedTokens: Map<tokenId, userId>` ao store de grid
-  - `GridToken`: aplicar `ring-2 ring-amber-400 animate-pulse` quando locked por outro usuario
+- [x] **Soft Locking:** Implementar sinais visuais quando um token esta sendo manipulado por outro jogador.
   - Bloquear drag em tokens locked por outro usuario
+  - `GridToken`: aplicar `ring-2 ring-amber-400 animate-pulse` quando locked por outro usuario
   - Tests: token locked renderiza indicador visual, drag e bloqueado
 
 ---
